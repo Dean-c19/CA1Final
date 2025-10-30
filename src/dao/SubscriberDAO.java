@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Subscriber;
+import entities.Payment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,52 +17,52 @@ public class SubscriberDAO {
 		
 	}
 	
-	public void persist(Subscriber subscriber) {
+	public void persist(Payment payment) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(subscriber);
+		em.persist(payment);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public void remove(Subscriber subscriber) {
+	public void remove(Payment payment) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.remove(em.merge(subscriber));
+		em.remove(em.merge(payment));
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public Subscriber merge(Subscriber subscriber) {
+	public Payment merge(Payment payment) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Subscriber updatedSubscriber = em.merge(subscriber);
+		Payment updatedPayment = em.merge(payment);
 		em.getTransaction().commit();
 		em.close();
-		return updatedSubscriber;
+		return updatedPayment;
 	}
 	
 	
-	public List<Subscriber> getAllSubscribers() {
+	public List<Payment> getAllSubscribers() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		List<Subscriber> subscribersFromDB = new ArrayList<Subscriber>();
+		List<Payment> subscribersFromDB = new ArrayList<Payment>();
 		subscribersFromDB = em.createNamedQuery("Subscriber.findAll").getResultList();
 		em.getTransaction().commit();
 		em.close();
 		return subscribersFromDB;
 	}
 	
-	public Subscriber getSubscriberByUsername(String username){
+	public Payment getSubscriberByUsername(String username){
 		EntityManager em = emf.createEntityManager();
-		List<Subscriber> subscribers = (List<Subscriber>) 
+		List<Payment> payments = (List<Payment>)
 				em.createNamedQuery("Subscriber.findByUsername").
 				setParameter("username", username).getResultList();
 		em.close();
 		//Do whatever you want with the subscriber(s) with that username
 		//Here we just return the first one
-		Subscriber sub = new Subscriber();
-		for(Subscriber s: subscribers) {
+		Payment sub = new Payment();
+		for(Payment s: payments) {
 			sub = s;
 		}
 		return sub;

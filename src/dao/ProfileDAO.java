@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Profile;
+import entities.Member;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,29 +15,29 @@ public class ProfileDAO {
 		
 	}
 	
-	public void persist(Profile profile) {
+	public void persist(Member member) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(profile);
+		em.persist(member);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public void remove(Profile profile) {
+	public void remove(Member member) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.remove(em.merge(profile));
+		em.remove(em.merge(member));
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public Profile merge(Profile profile) {
+	public Member merge(Member member) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Profile updatedProfile = em.merge(profile);
+		Member updatedMember = em.merge(member);
 		em.getTransaction().commit();
 		em.close();
-		return updatedProfile;
+		return updatedMember;
 	}
 	
 	

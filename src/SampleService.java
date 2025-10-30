@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -15,9 +13,9 @@ import javax.ws.rs.Produces;
 import dao.CommentDAO;
 import dao.ProfileDAO;
 import dao.SubscriberDAO;
-import entities.Comment;
-import entities.Profile;
-import entities.Subscriber;
+import entities.MembersPlan;
+import entities.Member;
+import entities.Payment;
 import model.Employee;
 
 @Path("/sampleservice")
@@ -44,28 +42,28 @@ public class SampleService {
         CommentDAO cDAO = new CommentDAO();
 
         //Add comments
-        Comment c1 = new Comment("Jane loves apples");
-        Comment c2 = new Comment("Jane hates bananas");
-        Comment c3 = new Comment("Jane loves dogs");
+        MembersPlan c1 = new MembersPlan("Jane loves apples");
+        MembersPlan c2 = new MembersPlan("Jane hates bananas");
+        MembersPlan c3 = new MembersPlan("Jane loves dogs");
         cDAO.persist(c1);
         cDAO.persist(c2);
         cDAO.persist(c3);
 
-        List<Comment> comments = new ArrayList<Comment>();
-        comments.add(c1);
-        comments.add(c2);
-        comments.add(c3);
+        List<MembersPlan> membersPlans = new ArrayList<MembersPlan>();
+        membersPlans.add(c1);
+        membersPlans.add(c2);
+        membersPlans.add(c3);
         //Add Profile
-        Profile profile = new Profile("Jane's cool profile", comments);
-        pDAO.persist(profile);
+        Member member = new Member("Jane's cool profile", membersPlans);
+        pDAO.persist(member);
 
         //Add Subscriber
-        Subscriber subscriber = new Subscriber("Jane","beans", profile );
-        sDAO.persist(subscriber);
+        Payment payment = new Payment("Jane","beans", member);
+        sDAO.persist(payment);
 
         //View all subscribers (here I've accessed all objects through the subscriber)
-        ArrayList<Subscriber> subscribers = (ArrayList<Subscriber>) sDAO.getAllSubscribers();
-        for(Subscriber s : subscribers) {
+        ArrayList<Payment> payments = (ArrayList<Payment>) sDAO.getAllSubscribers();
+        for(Payment s : payments) {
             System.out.println("Subscriber object username is "+s.getUsername());
             System.out.println("Subscriber's Profile says "+ s.getProfile().getDescription());
             //Note I've made an Eagar Fetch on the Comments List in Profile to enable this
@@ -73,8 +71,8 @@ public class SampleService {
         }
 
         //Update username using merge
-        subscriber.setUsername("JANEY");
-        sDAO.merge(subscriber);
+        payment.setUsername("JANEY");
+        sDAO.merge(payment);
 
         //remove the last comment
         cDAO.remove(c3);

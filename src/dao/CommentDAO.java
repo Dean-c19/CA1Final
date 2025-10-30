@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Comment;
+import entities.MembersPlan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,29 +15,29 @@ public class CommentDAO {
 		
 	}
 	
-	public void persist(Comment comment) {
+	public void persist(MembersPlan membersPlan) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(comment);
+		em.persist(membersPlan);
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public void remove(Comment comment) {
+	public void remove(MembersPlan membersPlan) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.remove(em.merge(comment));
+		em.remove(em.merge(membersPlan));
 		em.getTransaction().commit();
 		em.close();
 	}
 	
-	public Comment merge(Comment comment) {
+	public MembersPlan merge(MembersPlan membersPlan) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Comment updatedComment = em.merge(comment);
+		MembersPlan updatedMembersPlan = em.merge(membersPlan);
 		em.getTransaction().commit();
 		em.close();
-		return updatedComment;
+		return updatedMembersPlan;
 	}
 	
 	
