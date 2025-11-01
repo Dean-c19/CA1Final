@@ -10,9 +10,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import dao.CommentDAO;
-import dao.ProfileDAO;
-import dao.SubscriberDAO;
+import dao.PaymentDAO;
+import dao.MemberDAO;
+import dao.MembersPlanDAO;
 import entities.MembersPlan;
 import entities.Member;
 import entities.Payment;
@@ -37,9 +37,9 @@ public class SampleService {
         employee2.setJob("Business Analyst");
         employees.put(employee2.getEmployeeId(), employee2);
 
-        SubscriberDAO sDAO = new SubscriberDAO();
-        ProfileDAO pDAO = new ProfileDAO();
-        CommentDAO cDAO = new CommentDAO();
+        MembersPlanDAO sDAO = new MembersPlanDAO();
+        MemberDAO pDAO = new MemberDAO();
+        PaymentDAO cDAO = new PaymentDAO();
 
         //Add comments
         MembersPlan c1 = new MembersPlan("Jane loves apples");

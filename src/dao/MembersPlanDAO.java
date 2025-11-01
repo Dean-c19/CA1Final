@@ -5,41 +5,35 @@ import entities.MembersPlan;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 
-public class CommentDAO {
+public class MembersPlanDAO {
 	
 	protected static EntityManagerFactory emf = 
 			Persistence.createEntityManagerFactory("jpaPU"); 	
-	
-	public CommentDAO() {
-		
+
+	public MembersPlanDAO() {
+
 	}
+
 	
-	public void persist(MembersPlan membersPlan) {
+	public void persist(MembersPlan plan) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.persist(membersPlan);
+		em.persist(plan);
 		em.getTransaction().commit();
 		em.close();
 	}
-	
-	public void remove(MembersPlan membersPlan) {
+
+
+	public List<MembersPlan> getAllPlans() {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		em.remove(em.merge(membersPlan));
+		List<MembersPlan> plans = em.createNamedQuery("MembersPlan.findAll", MembersPlan.class).getResultList();
 		em.getTransaction().commit();
 		em.close();
+		return plans;
 	}
-	
-	public MembersPlan merge(MembersPlan membersPlan) {
-		EntityManager em = emf.createEntityManager();
-		em.getTransaction().begin();
-		MembersPlan updatedMembersPlan = em.merge(membersPlan);
-		em.getTransaction().commit();
-		em.close();
-		return updatedMembersPlan;
-	}
-	
 	
 
 
