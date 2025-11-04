@@ -8,28 +8,24 @@
     <title>REST Example</title>
 </head>
 <body>
-<form action= "http://localhost:8080/CA1Final/restful-services/sampleservice/hello" method="GET">
 
-
-    <input type="submit" value="Hello World Test">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/members" method="GET">
+    <input type="submit" value="View All Members">
 </form>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/sampleservice/echo/message" method="GET">
-
-    <input type="submit" value="Print Message ">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/json/members" method="GET">
+    <input type="submit" value="View all JSON Members ">
 </form>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/sampleservice/employees" method="GET">
-    <input type="submit" value="View All Employees">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/members" method="GET">
+    <input type="submit" value="View all XML Members ">
 </form>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/sampleservice/json/employees" method="GET">
-    <input type="submit" value="View JSON All Employee ">
+
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/json/member/10" method="GET">
+    <input type="submit" value="View specific member">
 </form>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/sampleservice/json/employee/1" method="GET">
-    <input type="submit" value="View JSON Employee 1">
-</form>
 
 </body>
 </html>

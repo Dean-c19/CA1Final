@@ -1,12 +1,11 @@
 package entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @NamedQueries({
-		@NamedQuery(name = "Member.findAll", query = "select o from Member o "),
-		@NamedQuery(name = "Member.findByName", query = "select o from Member o where o.name = :name")
+		@NamedQuery(name = "Member.findAll", query = "select m from Member m ")
 })
 
 
@@ -23,11 +22,11 @@ public class Member {
 	private String address;
 	private String goals;
 
-	@ManyToOne
+	@ManyToOne// many members can be on the same plan
 	private MembersPlan membersPlan;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Payment> payments = new ArrayList<>();
+	private List<Payment> payments;
 
 	public Member() {
 
@@ -42,14 +41,6 @@ public class Member {
 		this.goals = goals;
 
 	}
-	
-	
-	public void addPayment(Payment payment) {
-		payments.add(payment);
-	}
-
-
-
 
 	public int getId() {
 		return id;
@@ -58,8 +49,6 @@ public class Member {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 
 	public String getMembersId() {
 		return membersId;

@@ -34,13 +34,12 @@ public class MemberDAO {
 		em.close();
 	}
 	
-	public Member merge(Member member) {
+	public Member getById(int id) {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Member updatedMember = em.merge(member);
-		em.getTransaction().commit();
+		Member m = em.find(Member.class, id);
 		em.close();
-		return updatedMember;
+		return m;
 	}
 	
 	public List<Member> getAllMembers(){
@@ -50,16 +49,6 @@ public class MemberDAO {
 		em.getTransaction().commit();
 		em.close();
 		return members;
-	}
-
-	public Member getMemberByName(String name){
-		EntityManager em = emf.createEntityManager();
-		List<Member> members = em.createNamedQuery("Member.findByName", Member.class)
-				.setParameter("name", name)
-				.getResultList();
-		em.close();
-		return members.isEmpty() ? null : members.get(0);
-
 	}
 
 

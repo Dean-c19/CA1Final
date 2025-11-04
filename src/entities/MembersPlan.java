@@ -2,7 +2,7 @@ package entities;
 
 import javax.persistence.*;
 
-@NamedQuery(name =  "MembersPlan.findAll", query = "select o from MembersPlan o")
+@NamedQuery(name =  "MembersPlan.findAll", query = "select p from MembersPlan p")
 @Entity
 public class MembersPlan {
 		
@@ -23,13 +23,10 @@ public class MembersPlan {
 
 	}
 
-	public int getId() {
+	public int getId(){
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getContent() {
 		return content;

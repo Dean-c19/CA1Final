@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 
 @Entity
+@NamedQuery(name =  "Payment.findAll", query = "select p from Payment p")
+
 public class Payment {
 		
 	@Id
@@ -14,6 +16,9 @@ public class Payment {
 	private String paymentDate;
 	private double amount;
 	
+	@ManyToOne
+	private Member member;
+
 
 
 	public Payment() {
@@ -45,6 +50,14 @@ public class Payment {
 	public void setAmount(double amount){
 		this.amount =amount;
 
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 }
