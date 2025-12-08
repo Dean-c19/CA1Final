@@ -9,21 +9,21 @@
 </head>
 <body>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/fitness/members" method="GET">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/users" method="GET">
     <input type="submit" value="View All Members">
 </form>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/fitness/json/members" method="GET">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/json/users" method="GET">
     <input type="submit" value="View all JSON Members ">
 </form>
 
-<form action= "http://localhost:8080/CA1Final/restful-services/fitness/members" method="GET">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/users" method="GET">
     <input type="submit" value="View all XML Members ">
 </form>
 
 
-<form action= "http://localhost:8080/CA1Final/restful-services/fitness/json/member/10" method="GET">
-    <input type="submit" value="View specific member">
+<form action= "http://localhost:8080/CA1Final/restful-services/fitness/json/user/10" method="GET">
+    <input type="submit" value="View specific user">
 </form>
 
 
