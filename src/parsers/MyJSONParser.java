@@ -9,18 +9,29 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import java.io.File;
+import java.io.FileInputStream;
+
 
 import entities.Emission;
 
 public class MyJSONParser {
 
+    // constructor should take in a file type (this is the json file)
+    private File jsonFile;
+    public MyJSONParser(File jsonFile) {
+        this.jsonFile = jsonFile;
+    }
+
+
     private String jsonString = "";
 
     public int parseAndMerge(Map<String, Emission> emissionMap) throws IOException, ParseException {
-        InputStream is = getClass().getClassLoader().getResourceAsStream("GreenhouseGasEmissions2025.json");
+        // this should use this.jsonFile and convert to json string
+        InputStream is = new FileInputStream(this.jsonFile);
 
         if (is == null) {
-            throw new IOException("Could not find emissions.json in resources");
+            throw new IOException("Could not find GreenhouseGasEmissions2025.json in resources");
         }
 
         Scanner scanner = new Scanner(is);
@@ -81,11 +92,6 @@ public class MyJSONParser {
 
             emission.setActualValue(actualValue);
 
-            System.out.println("JSON Objects under Emissions array parsed");
-            System.out.println("Category: " + category);
-            System.out.println("Gas Units: " + unit);
-            System.out.println("Actual Value: " + actualValue);
-            System.out.println("Predicted Value: " + emission.getPredictedValue());
         }
 
         return jsonRecordsCount;

@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dao.EmissionDAO;
 import entities.Emission;
 import parsers.MyJSONParser;
 import parsers.XMLParser;
@@ -18,9 +19,11 @@ public class main1 {
     public static void main(String[] args) {
 
         try {
+            EmissionDAO emissionDAO = new EmissionDAO();
             XMLParser xmlParser = new XMLParser();
 
-            File xmlFile = new File("src/main/resources/emissions.xml");
+            File xmlFile = new File("resources/emissions.xml");
+            File jsonFile = new File("resources/GreenhouseGasEmissions2025.json");
 
             List<Emission> xmlEmissions = xmlParser.parse(xmlFile);
 
@@ -33,7 +36,7 @@ public class main1 {
             }
 
 
-            MyJSONParser jsonParser = new MyJSONParser();
+            MyJSONParser jsonParser = new MyJSONParser(jsonFile);
             int jsonCount = jsonParser.parseAndMerge(emissionMap);
 
             System.out.println("Actual emissions (from JSON) records processed: " + jsonCount);
@@ -41,12 +44,14 @@ public class main1 {
             System.out.println(" All Emissions After Merge (Predicted + Actual)");
 
             for (Emission e : emissionMap.values()) {
-                System.out.println("Category: " + e.getCategory());
-                System.out.println("Unit: " + e.getUnit());
-                System.out.println("Predicted: " + e.getPredictedValue());
-                System.out.println("Actual: " + e.getActualValue());
+                if(e.getPredictedValue() != 0.00 && e.getActualValue() != 0.00) {
+                    emissionDAO.persist(e);
+                }
             }
 
+            for(Emission e: emissionDAO.getAllEmissions()) {
+                System.out.println(e.toString());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

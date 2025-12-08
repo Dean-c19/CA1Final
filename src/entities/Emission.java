@@ -1,7 +1,7 @@
 package entities;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
+
 
 // Should contain the important data from xml / json files
 
@@ -76,6 +76,16 @@ public class Emission {
     public void setActualValue(double actualValue) {
         this.actualValue = actualValue;
     }
+    @Override
+    public String toString() {
+        return "Emission " +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", unit='" + unit + '\'' +
+                ", predictedValue=" + predictedValue +
+                ", actualValue=" + actualValue;
+    }
+
 }
 
 

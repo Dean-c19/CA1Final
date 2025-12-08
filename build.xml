@@ -43,11 +43,11 @@
         </copy>
     </target>
 
-    <!-- Copy Web.xml file from resources to {project_name}/WEB-INF/ -->
+    <!-- Copy .xml files from resources to {project_name}/WEB-INF/ -->
     <target name="copy-webxml" depends="copy-html">
         <copy todir="${build.dir}/WEB-INF">
             <fileset dir="../${project.name}/resources">
-                <include name="**/web.xml"/>
+                <include name="**/*.xml"/>
             </fileset>
         </copy>
     </target>
@@ -55,7 +55,7 @@
     <!-- Copy persistence.xml file from resources to {project_name}/WEB-INF/ -->
     <target name="copy-persistence" depends="copy-classes">
         <copy todir="${build.dir}/WEB-INF/classes/META-INF">
-            <fileset dir="../${project.name}/resources">
+            <fileset dir="../${project.name}/src/META-INF">
                 <include name="**/persistence.xml"/>
             </fileset>
         </copy>

@@ -99,12 +99,6 @@ public class XMLParser {
                 emission.setPredictedValue(predictedValue);
                 emission.setActualValue(0.0);
 
-                System.out.println("Parsed XML Emission:");
-                System.out.println("  Category: " + category);
-                System.out.println("  Unit: " + unit);
-                System.out.println("  Predicted: " + predictedValue);
-                System.out.println("  Actual: 0");
-
                 emissionsList.add(emission);
             }
         }
