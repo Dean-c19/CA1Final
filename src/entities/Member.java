@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 		@NamedQuery(name = "Member.findAll", query = "select m from Member m ")
 })
 
-
+@XmlRootElement
 @Entity
 public class Member {
 		

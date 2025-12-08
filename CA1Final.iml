@@ -49,9 +49,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="stax-api-1.0" level="project" />
-    <orderEntry type="library" exported="" name="Hibernate" level="project" />
+    <orderEntry type="library" exported="" name="RestEasy" level="project" />
+    <orderEntry type="library" exported="" name="My SQL Connector" level="project" />
+    <orderEntry type="library" exported="" name="JSoup" level="project" />
+    <orderEntry type="library" exported="" name="JSON SImple" level="project" />
     <orderEntry type="library" exported="" name="Java EE 6-Java EE 6" level="project" />
-    <orderEntry type="library" exported="" name="mysql-connector-j-8.0.31" level="project" />
+    <orderEntry type="library" exported="" name="Hibernate" level="application" />
   </component>
 </module>

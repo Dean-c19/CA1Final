@@ -1,13 +1,12 @@
 package entities;
 
 import javax.persistence.*;
-
-
+import javax.xml.bind.annotation.XmlRootElement;
 
 
 @Entity
 @NamedQuery(name =  "Payment.findAll", query = "select p from Payment p")
-
+@XmlRootElement
 public class Payment {
 		
 	@Id
