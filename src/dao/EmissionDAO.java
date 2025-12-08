@@ -47,4 +47,12 @@ public class EmissionDAO {
         em.close();
         return emissions;
     }
+    public void update(Emission emission) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.merge(emission);
+        em.getTransaction().commit();
+        em.close();
+    }
+
 }

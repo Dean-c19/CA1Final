@@ -51,5 +51,13 @@ public class UserDAO {
 		return users;
 	}
 
+	public void update(User user) {
+		EntityManager em = emf.createEntityManager();
+		em.getTransaction().begin();
+		em.merge(user);
+		em.getTransaction().commit();
+		em.close();
+	}
+
 
 }

@@ -3,6 +3,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
+
 // Should contain the important data from xml / json files
 
 @NamedQueries({
@@ -22,6 +23,11 @@ public class Emission {
     private String unit;
     private double predictedValue;
     private double actualValue;
+
+    @OneToOne
+    private User approvedBy;
+
+    private boolean approved;
 
     public Emission() {
     }
@@ -83,7 +89,25 @@ public class Emission {
                 ", category='" + category + '\'' +
                 ", unit='" + unit + '\'' +
                 ", predictedValue=" + predictedValue +
-                ", actualValue=" + actualValue;
+                ", actualValue=" + actualValue +
+                ", approved=" + approved +
+                ", approvedBy=" + (approvedBy != null ? approvedBy.getName() : "null");
+    }
+
+    public User getApprovedBy() {
+        return approvedBy;
+    }
+
+    public void setApprovedBy(User approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
 }
