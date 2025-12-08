@@ -2,8 +2,7 @@ package parsers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -16,11 +15,9 @@ import entities.Emission;
 public class MyJSONParser {
 
     private String jsonString = "";
-    private List<Emission> emissions = new ArrayList<>();
 
-    public MyJSONParser() throws IOException, ParseException {
-
-        InputStream is = getClass().getClassLoader().getResourceAsStream("emissions.json");
+    public int parseAndMerge(Map<String, Emission> emissionMap) throws IOException, ParseException {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("GreenhouseGasEmissions2025.json");
 
         if (is == null) {
             throw new IOException("Could not find emissions.json in resources");
@@ -30,25 +27,22 @@ public class MyJSONParser {
         while (scanner.hasNext()) {
             jsonString += scanner.nextLine();
         }
-
         scanner.close();
 
         System.out.println("JSON from file as a String");
         System.out.println(jsonString);
 
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(jsonString);
-        System.out.println("JSON as a Java Object");
-        System.out.println(obj);
-
-
         JSONObject jobj = (JSONObject) parser.parse(jsonString);
 
         JSONArray jsonArray = (JSONArray) jobj.get("Emissions");
         System.out.println("JSON as a JSONArray = Emissions collection");
         System.out.println(jsonArray);
 
+        int jsonRecordsCount = 0;
+
         for (int i = 0; i < jsonArray.size(); i++) {
+
             JSONObject jo1 = (JSONObject) jsonArray.get(i);
 
             String category = (String) jo1.get("Category");
@@ -66,29 +60,34 @@ public class MyJSONParser {
                 continue;
             }
 
-
             if (actualValue <= 0) {
                 continue;
             }
+
+            jsonRecordsCount++;
+
+
+            String key = category.trim() + "||" + unit.trim();
+
+            Emission emission = emissionMap.get(key);
+
+            if (emission == null) {
+                emission = new Emission();
+                emission.setCategory(category.trim());
+                emission.setUnit(unit.trim());
+                emission.setPredictedValue(0.0);
+                emissionMap.put(key, emission);
+            }
+
+            emission.setActualValue(actualValue);
 
             System.out.println("JSON Objects under Emissions array parsed");
             System.out.println("Category: " + category);
             System.out.println("Gas Units: " + unit);
             System.out.println("Actual Value: " + actualValue);
-            System.out.println("Predicted Value: 0");
-
-            Emission emission = new Emission();
-            emission.setCategory(category.trim());
-            emission.setUnit(unit.trim());
-            emission.setActualValue(actualValue);
-            emission.setPredictedValue(0.0);
-
-            emissions.add(emission);
+            System.out.println("Predicted Value: " + emission.getPredictedValue());
         }
-    }
 
-    public List<Emission> getEmissions() {
-        return emissions;
+        return jsonRecordsCount;
     }
-
 }
