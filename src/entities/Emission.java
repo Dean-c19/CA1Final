@@ -1,17 +1,18 @@
 package entities;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
 
 // Should contain the important data from xml / json files
-
+// named queries to get all emissions and by category
 @NamedQueries({
         @NamedQuery(name = "Emission.findAll", query = "select e from Emission e"),
         @NamedQuery(name = "Emission.findByCategory", query = "select e from Emission e where e.category = :category")
 })
 
-@XmlRootElement
+@XmlRootElement(name = "emission")
 @Entity
 public class Emission {
 
@@ -24,6 +25,7 @@ public class Emission {
     private double predictedValue;
     private double actualValue;
 
+    // one to one so that one emission  can be apporved by one user
     @OneToOne
     private User approvedBy;
 
@@ -39,6 +41,7 @@ public class Emission {
         this.actualValue = actualValue;
     }
 
+    @XmlElement
     public int getId() {
         return id;
     }
@@ -47,7 +50,7 @@ public class Emission {
         this.id = id;
     }
 
-
+    @XmlElement
     public String getCategory() {
         return category;
     }
@@ -56,7 +59,7 @@ public class Emission {
         this.category = category;
     }
 
-
+    @XmlElement
     public String getUnit() {
         return unit;
     }
@@ -65,7 +68,7 @@ public class Emission {
         this.unit = unit;
     }
 
-
+    @XmlElement
     public double getPredictedValue() {
         return predictedValue;
     }
@@ -74,7 +77,7 @@ public class Emission {
         this.predictedValue = predictedValue;
     }
 
-
+    @XmlElement
     public double getActualValue() {
         return actualValue;
     }
@@ -94,6 +97,7 @@ public class Emission {
                 ", approvedBy=" + (approvedBy != null ? approvedBy.getName() : "null");
     }
 
+    @XmlElement
     public User getApprovedBy() {
         return approvedBy;
     }
@@ -102,6 +106,7 @@ public class Emission {
         this.approvedBy = approvedBy;
     }
 
+    @XmlElement
     public boolean isApproved() {
         return approved;
     }

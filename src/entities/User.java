@@ -1,16 +1,18 @@
 package entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.util.List;
 
+//named query to get all users
 @NamedQueries({
 		@NamedQuery(name = "User.findAll", query = "select u from User u"),
 
 })
 
-@XmlRootElement
+@XmlRootElement(name = "emissions")
 @Entity
 public class User {
 		
@@ -33,6 +35,7 @@ public class User {
 
 	}
 
+	@XmlElement
 	public int getId() {
 		return id;
 	}
@@ -41,6 +44,7 @@ public class User {
 		this.id = id;
 	}
 
+	@XmlElement
 	public String getUsersId() {
 		return usersId;
 	}
@@ -50,6 +54,7 @@ public class User {
 	}
 
 
+	@XmlElement
 	public String getName() {
 		return name;
 	}

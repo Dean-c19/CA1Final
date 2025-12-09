@@ -18,26 +18,28 @@ import org.xml.sax.SAXException;
 import entities.Emission;
 
 public class XMLParser {
-
+    // parses the xml file and returns the list of emissions with rules
     public List<Emission> parse(File xmlFile) throws
             IOException, ParserConfigurationException, SAXException {
-
+// holds all the valid emission objs created form the xml
         List<Emission> emissionsList = new ArrayList<>();
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(xmlFile);
-
+        // normalise to clean up the document
         doc.getDocumentElement().normalize();
+        // print root element to console for debugging
         System.out.println("Root element: " + doc.getDocumentElement().getNodeName());
 
-
+        // get all the rows from the xml and each row represents one emission
         NodeList rows = doc.getElementsByTagName("Row");
-
+        // loop over all the rows
         for (int i = 0; i < rows.getLength(); i++) {
 
             Node rowNode = rows.item(i);
-
+            // only process if the node is an element
+            // get the elements and read the content in it
             if (rowNode.getNodeType() == Node.ELEMENT_NODE) {
 
                 Element elem = (Element) rowNode;
@@ -59,18 +61,20 @@ public class XMLParser {
 
                 Node valueNode = elem.getElementsByTagName("Value").item(0);
                 String valueStr = valueNode != null ? valueNode.getTextContent().trim() : null;
-
+                // if any of the fields missing skip it
                 if (category == null || unit == null || valueStr == null) {
                     continue;
                 }
 
                 double predictedValue;
                 try {
+                    // conver from string to double
                     predictedValue = Double.parseDouble(valueStr);
                 } catch (NumberFormatException e) {
                     continue;
                 }
 
+                // apply the rules
                 if (predictedValue <= 0) {
                     continue;
                 }
@@ -92,7 +96,7 @@ public class XMLParser {
                 } else {
                     continue;
                 }
-
+                // create emission obj then if rules are followed
                 Emission emission = new Emission();
                 emission.setCategory(category);
                 emission.setUnit(unit);

@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
+// handle all database operations for the emissions
 public class EmissionDAO {
 
     protected static EntityManagerFactory emf =
@@ -53,6 +54,18 @@ public class EmissionDAO {
         em.merge(emission);
         em.getTransaction().commit();
         em.close();
+    }
+
+    public List<Emission> getByCategory(String category) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        List<Emission> emissions = em
+                .createNamedQuery("Emission.findByCategory", Emission.class)
+                .setParameter("category", category)
+                .getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return emissions;
     }
 
 }

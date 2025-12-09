@@ -6,7 +6,6 @@ import entities.User;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 import java.util.List;
 
 @Path("/emissions")
@@ -14,30 +13,21 @@ public class EmissionService {
 
     EmissionDAO emissionDAO = new EmissionDAO();
     UserDAO userDAO = new UserDAO();
+    // returns all the emissions
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Emission> getAllEmissions() {
         return emissionDAO.getAllEmissions();
     }
-    @GET
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getEmissionById(@PathParam("id") int id) {
-        Emission e = emissionDAO.getById(id);
-        if (e == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Emission not found").build();
-        }
-        return Response.ok(e).build();
-    }
 
+    //approve an emmision by the id and the user id
     @POST
     @Path("/json/approve/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response approveEmission(
             @PathParam("id") int emissionId,
-            @QueryParam("userId") int userId
+            @QueryParam("userId") int userId // read the user id that is approving
     ) {
 
         Emission emission = emissionDAO.getById(emissionId);
@@ -60,6 +50,7 @@ public class EmissionService {
         return Response.ok(emission).build();
     }
 
+    // delete an emission
     @DELETE
     @Path("/json/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -73,10 +64,11 @@ public class EmissionService {
         return Response.ok("Emission deleted").build();
     }
 
+    // add a user
     @POST
     @Path("/addUser")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
     public Response addUser(User input) {
         if (input == null) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -90,6 +82,7 @@ public class EmissionService {
                 .build();
     }
 
+    // to view all the users
 
     @GET
     @Path("/allUsers")
@@ -99,6 +92,7 @@ public class EmissionService {
     }
 
 
+// to delete a user
     @DELETE
     @Path("/jsonUser/{id}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -112,6 +106,7 @@ public class EmissionService {
         return Response.ok("User deleted").build();
     }
 
+// update a user
     @PUT
     @Path("/jsonUser/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -133,4 +128,31 @@ public class EmissionService {
 
         return Response.ok(input).build();
     }
+
+    // find a emission by the category
+    @GET
+    @Path("/byCategory")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getEmissionsByCategory(@QueryParam("category") String category) {
+
+        if (category == null || category.trim().isEmpty()) {
+            return "Category must be provided";
+        }
+
+        List<Emission> list = emissionDAO.getByCategory(category);
+
+        if (list == null || list.isEmpty()) {
+            return "No emissions found for category: " + category;
+        }
+        // use strinngbuilder to create the list for emissions (an array list/ list would not work for me )
+        StringBuilder sb = new StringBuilder();
+        sb.append("Emissions for category: ").append(category).append("\n\n");
+
+        for (Emission e : list) {
+            sb.append(e.toString()).append("\n");
+        }
+
+        return sb.toString();
+    }
+
 }

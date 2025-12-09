@@ -3,7 +3,7 @@ package model;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-// supposed to to be used for transferring members data between postman and the server
+// supposed to to be used for transferring users data between postman and the server
 
 @XmlRootElement(name = "member")
 public class UserM {
@@ -16,8 +16,8 @@ public class UserM {
         return usersId;
     }
 
-    public void setMembersId(String membersId) {
-        this.usersId = membersId;
+    public void setUsersId(String usersId) {
+        this.usersId = usersId;
     }
 
 

@@ -7,7 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
-
+// handle all databse operations for the user
 public class UserDAO {
 	
 	protected static EntityManagerFactory emf = 
